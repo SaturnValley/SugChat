@@ -1,0 +1,17 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <%= link_to "SugChat", '#', id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          You are signing in as <%= current_user.name %>
+          <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, form: {style: "display:inline"}, data: {confirm: 'Are you sure?'} %>
+          <% else %>
+          Welcome Guest!
+          <%= button_to 'Sign In', new_user_session_path, form: {style: "display:inline"} %>
+          <%= button_to 'Sign Up', new_user_registration_path, method: :get, form: {style: "display:inline"} %>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>

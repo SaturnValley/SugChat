@@ -10,16 +10,21 @@
   </head>
 
   <body>
-    <div id="header">
-      <% if user_signed_in? %>
-        You are signing in as <%= current_user.name %>
-        <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, form: {style: "display:inline"}, data: {confirm: 'Are you sure?'} %>
-        <% else %>
-        Welcome Guest!
-        <%= button_to 'Sign In', new_user_session_path, form: {style: "display:inline"} %>
-        <%= button_to 'Sign Up', new_user_registration_path, method: :get, form: {style: "display:inline"} %>
-      <% end %>
+    <%= render 'layouts/header' %>
+    <div class="container">
+      <%= render 'layouts/footer' %>
     </div>
+    <table align="left" border height="800" width="200">
+            <td>chatroom list</td>
+    </table>
+    <table align="right" border height="800" width="300">
+      <tr>
+        <td height="300">information</td>
+      </tr>
+      <tr>
+        <td height="500">Drawing Table</td>
+      </tr>
+    </table>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
