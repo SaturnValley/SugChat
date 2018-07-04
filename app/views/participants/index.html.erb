@@ -13,6 +13,24 @@
   </thead>
 
   <tbody>
+  	
+    Test of creat/deletion of Participant instance
+    <% @r= ChatRoom.order("id ASC")%>
+    <% @u= User.order("id ASC")%>
+    <% @r.each do |room| %>
+    <% @u.each do |user| %>
+    　　 (Create new record)
+    <#%Participant.create(user: user,chat_room: room)%>
+    (Delete record)
+    <#%Participant.where(user:user.id).where(chat_room:room.id).destroy_all%>
+    <%if user_signed_in? then%>
+    <%= user_signed_in? %>
+    <%end%>
+    <%end%>
+    <%= room.id%>
+    <%end%>
+   
+    
     <% @users= User.order("id ASC")%>
     <% @users.each do |user| %>
     	<% @bool=true%>
