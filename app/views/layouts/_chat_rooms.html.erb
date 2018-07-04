@@ -1,0 +1,26 @@
+<thead>
+    <tr>
+      <th>Name</th>
+      <th>Comment</th>
+      <th>User</th>
+      <th>Checked</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if current_user != nil %>
+    <% session[current_user.id].each do |chat_room| %>
+      <tr>
+        <td><%= link_to chat_room["name"], controller: "chat_rooms", action:"choose" , id: chat_room["id"] , user_id: chat_room["user_id"] %></td>
+        <td><%= chat_room["comment"] %></td>
+        <td><%= chat_room["user_name"] %></td>
+        <td><%= chat_room["check_flag"] %></td>
+        <td><%= link_to 'Edit', edit_chat_room_path(chat_room["id"]) %></td>
+        <td><%= link_to 'Destroy', {controller: "chat_rooms", action:"destroy", id: chat_room["id"]} , method: :delete, data: { confirm: 'Are you sure?' }%></td>
+      </tr>
+    <% end %>
+    <% end %>
+  </tbody>
+
+  <br/>
+  <div style="display: block"><%= link_to 'New Chat Room', new_chat_room_path %></div>

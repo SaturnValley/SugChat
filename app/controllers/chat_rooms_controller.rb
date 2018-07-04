@@ -1,11 +1,24 @@
 class ChatRoomsController < ApplicationController
-  before_action :set_chat_room, only: [:show, :edit, :update, :destroy]
+  before_action :set_chat_room, only: [:show, :edit, :update, :destroy, :choose]
   before_action :authenticate_user!
 
   # GET /chat_rooms
   # GET /chat_rooms.json
   def index
-    @chat_rooms = ChatRoom.all
+    @chat_rooms = ChatRoom.where(removed: nil)
+    #ログインユーザーが選択を行った部屋の状態のハッシュ
+    chat_room_list = []
+    for chat_room in @chat_rooms
+      temp_chat_rooms = {}
+      temp_chat_rooms["id"] = chat_room.id
+      temp_chat_rooms["name"] = chat_room.name
+      temp_chat_rooms["comment"] = chat_room.comment
+      temp_chat_rooms["user_id"] = chat_room.user_id
+      temp_chat_rooms["user_name"] = User.where(id: chat_room.user_id).first.name
+      temp_chat_rooms["check_flag"] = 0
+      chat_room_list.push(temp_chat_rooms)
+    end
+    session[current_user.id] = chat_room_list
   end
 
   # GET /chat_rooms/1
@@ -56,11 +69,21 @@ class ChatRoomsController < ApplicationController
   # DELETE /chat_rooms/1
   # DELETE /chat_rooms/1.json
   def destroy
-    @chat_room.destroy
+    @chat_room.removed = 1
+    @chat_room.save
     respond_to do |format|
       format.html { redirect_to chat_rooms_url, notice: 'Chat room was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def choose
+    for room_list in session[current_user.id]
+      if room_list["id"] == params[:id].to_i
+        room_list["check_flag"] = 1
+      end
+    end
+    redirect_to "/chat_rooms/#{params[:id]}"
   end
 
   private
