@@ -4,6 +4,9 @@
 
 $(document).ready ->
   canvas = $('#draw-area')
+  user_id = $('#user_id').attr("value")
+  chat_room = $('#chat_room').attr("value")
+  pict_num = $('#picture_number').attr("value")
   console.log 'hello'
   ctx = canvas[0].getContext('2d')
   ctx.lineWidth = 1
@@ -31,39 +34,65 @@ $(document).ready ->
 
   canvas.mousedown (e)->
     ctx.savePrevData()
-    ctx.prevPos = getPointPosition(e)
+    # removed by I.K. 2018/07/02 -- from here
+    # ctx.prevPos = getPointPosition(e)
+    # ctx.putPoint(ctx.prevPos.x, ctx.prevPos.y)
+    # ctx.beginPath()
+    # ctx.moveTo(ctx.prevPos.x, ctx.prevPos.y)
+    # position = { prex: ctx.prevPos.x, prey: ctx.prevPos.y, act: 'down'}
+    # App.room.speak(position)
+    # removed by I.K. 2018/07/02  -- to here
     mousedown = true
-    #ctx.putPoint(ctx.prevPos.x, ctx.prevPos.y)
+    pos = getPointPosition(e)
+    data = { x: pos.x, y: pos.y, act: 'down'}
     ctx.beginPath()
-    ctx.moveTo(ctx.prevPos.x, ctx.prevPos.y)
-    position = { prex: ctx.prevPos.x, prey: ctx.prevPos.y, act: 'down'}
-    App.room.speak(position)
+    ctx.moveTo(pos.x, pos.y)
+    App.room.draw(data)
 
   canvas.mousemove (e)->
     return unless mousedown
-    nowPos = getPointPosition(e)
-    #ctx.drawLine(ctx.prevPos.x, ctx.prevPos.y, nowPos.x, nowPos.y)
-    #ctx.putPoint(nowPos.x, nowPos.y)
-    ctx.prevPos = nowPos
-    ctx.lineTo(nowPos.x, nowPos.y)
+    # removed by I.K. 2018/07/02 -- from here
+    # nowPos = getPointPosition(e)
+    # ctx.putPoint(nowPos.x, nowPos.y)
+    # ctx.prevPos = nowPos
+    # ctx.lineTo(nowPos.x, nowPos.y)
+    # ctx.stroke()
+    # position = { prex: ctx.prevPos.x, prey: ctx.prevPos.y, nposx: nowPos.x, nposy: nowPos.y, act: 'move' }
+    # App.room.speak(position)
+    # removed by I.K. 2018/07/02  -- to here
+    pos = getPointPosition(e)
+    ctx.lineTo(pos.x, pos.y)
     ctx.stroke()
-    position = { prex: ctx.prevPos.x, prey: ctx.prevPos.y, nposx: nowPos.x, nposy: nowPos.y, act: 'move' }
-    App.room.speak(position)
+    data = { x: pos.x, y: pos.y, act: 'move'}
+    App.room.draw(data)
 
   canvas.mouseup (e)->
     mousedown = false
-    ctx.prevPos = getPointPosition(e)
-    ctx.lineTo(ctx.prevPos.x, ctx.prevPos.y)
+    # removed by I.K. 2018/07/02 -- from here
+    # ctx.prevPos = getPointPosition(e)
+    # ctx.lineTo(ctx.prevPos.x, ctx.prevPos.y)
+    # ctx.stroke()
+    # position = {prex: ctx.prevPos.x, prey: ctx.prevPos.y, act: 'up'}
+    # App.room.speak(position)
+    # removed by I.K. 2018/07/02  -- to here
+    pos = getPointPosition(e)
+    ctx.lineTo(pos.x, pos.y)
     ctx.stroke()
-    position = {prex: ctx.prevPos.x, prey: ctx.prevPos.y, act: 'up'}
-    App.room.speak(position)
+    color = "rgb(#{red_slider.val()},#{green_slider.val()},#{blue_slider.val()})"
+    data = { x: pos.x, y: pos.y, col: color, user: user_id, chat_room: chat_room, pict_num: pict_num, width: ctx.lineWidth, act: 'up'}
+    App.room.draw(data)
+
   canvas.mouseout (e)->
     mousedown = false
     #ctx.prevPos = getPointPosition(e)
     #ctx.lineTo(ctx.prevPos.x, ctx.prevPos.y)
     #ctx.stroke()
-    position = {act: 'out'}
-    App.room.speak(position)
+    # removed by I.K. 2018/07/02 -- from here
+    # position = {act: 'out'}
+    # App.room.draw(position)
+    # removed by I.K. 2018/07/02  -- to here
+    data = {act: 'out'}
+    App.room.draw(data)
 
   getPointPosition = (e)->
     {x: e.pageX-canvas.offset().left-2, y: e.pageY-canvas.offset().top-2}

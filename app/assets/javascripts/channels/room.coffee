@@ -28,6 +28,24 @@ $(document).ready ->
       # Called when the subscription has been terminated by the server
 
     received: (data) ->
+      remote_ctx.beginPath()
+      seq = data.room.sequence.split(",")
+      remote_ctx.lineWidth = data.room.width
+      remote_ctx.strokeStyle = data.room.color
+      remote_ctx.fillStyle = data.room.color
+      remote_ctx.beginPath()
+      pos0 = seq.shift()
+      pos1 = seq.shift()
+      remote_ctx.moveTo(pos0, pos1)
+      while seq.length > 0
+        pos0 = seq.shift()
+        pos1 = seq.shift()
+        remote_ctx.lineTo(pos0, pos1)
+      remote_ctx.closePath()
+      remote_ctx.stroke()
+
+      ###
+      console.log 'received'
       switch data.room.position.act
         when 'down'
           remote_ctx.savePrevData()
@@ -51,8 +69,11 @@ $(document).ready ->
           #remote_ctx.stroke()
           remote_ctx.closePath()
           remote_down = false
-
+      ###
       # Called when there's incoming data on the websocket for this channel
 
     speak: (position)->
       @perform 'speak', position: position
+
+    draw: (data) ->
+      @perform 'draw', data: data

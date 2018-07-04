@@ -1,3 +1,4 @@
 class ChatRoom < ApplicationRecord
-  has_many :partisipants
+  has_many :participants
+  has_many :strokes
 end

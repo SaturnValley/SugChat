@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :chats
   resources :participants
   devise_for :users
 

@@ -1,0 +1,11 @@
+Note to run the program;
+
+Table "strokes" is modified.
+
+So, please rollback the migration, several times, 
+
+rake db:rollback
+
+and then, migrate again.  Thanks
+ 
+rake db:migrate

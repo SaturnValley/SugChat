@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sequence: MyString
+  color: MyString
+  user_id: 1
+  chat_room_id: 1
+  picture_number: 1
+
+two:
+  sequence: MyString
+  color: MyString
+  user_id: 1
+  chat_room_id: 1
+  picture_number: 1
