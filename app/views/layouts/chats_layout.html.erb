@@ -31,7 +31,7 @@
                         <%= current_user.introduction %>
                       </p>
                     </p>
-                    <a class="btn btn-success btn-block" href="users/ <%= current_user.id %> /edit">Edit bio</a>
+                    <a class="btn btn-success btn-block" href="/users/<%= current_user.id %>/edit">Edit bio</a>
                   <% else %>
                   <p class="user-info-text"> Guest </p>
                   <a class="btn btn-success btn-block" href="/users/sign_in">Sign in</a>
