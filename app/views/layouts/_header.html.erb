@@ -1,16 +1,23 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "SugChat", '#', id: "logo" %>
+<header class="navbar navbar-fixed-top navbar-dark bg-red ">
     <nav>
+      <ul class="nav navbar-nav navbar-left">
+        <%= link_to image_tag('SugChat_logo.png'), chat_rooms_path %>
+      </ul>
+        <a class="btn btn-info" href="/chat_rooms/new" role="button">New Chat Room</a>
+        <a class="btn btn-info" href="/chats" role="button">Chats Log</a>
+        <a class="btn btn-info" href="/chat_rooms" role="button">ChatRoom List</a>
+        <a class="btn btn-info" href="/participants" role="button">User List</a>
+      </div>
       <ul class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-          You are signing in as <%= current_user.name %>
-          <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, form: {style: "display:inline"}, data: {confirm: 'Are you sure?'} %>
-          <% else %>
-          Welcome Guest!
-          <%= button_to 'Sign In', new_user_session_path, form: {style: "display:inline"} %>
-          <%= button_to 'Sign Up', new_user_registration_path, method: :get, form: {style: "display:inline"} %>
-        <% end %>
+        <div class="nav navbar-text">
+          <% if user_signed_in? %>
+            You are signing in as <%= current_user.name %>
+            <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, form: {style: "display:inline"}, data: {confirm: 'Are you sure?'} %>
+            <% else %>
+            Welcome Guest!
+            <%= button_to 'Sign In', new_user_session_path, form: {style: "display:inline"} %>
+            <%= button_to 'Sign Up', new_user_registration_path, method: :get, form: {style: "display:inline"} %>
+          <% end %>
       </ul>
     </nav>
   </div>

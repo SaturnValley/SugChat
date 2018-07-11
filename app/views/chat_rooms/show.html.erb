@@ -1,19 +1,30 @@
 <p id="notice"><%= notice %></p>
 
-<p>
+<h1>
   <strong>Name:</strong>
   <%= @chat_room.name %>
-</p>
+</h1>
 
-<p>
-  <strong>Comment:</strong>
+<h2>
   <%= @chat_room.comment %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @chat_room.user_id %>
-</p>
+</h2>
+<% @messages = Chat.where(chat_room_id:@chat_room.id) %>
+<% @messages.reverse_each do |message| %>
+  <strong><font size = "3"><%= User.find(message.user_id).name %></font></strong>
+  <br>
+  <br>
+  <font size="5">
+	<% @sp_mes = message.message.scan(/.{1,20}/) %>
+	<% @sp_mes.each do |m| %>
+	  <%= m %>
+	  <br>
+	<% end %>
+  </font>
+  <%= message.created_at %>
+  <br>
+  <br>
+<% end %>
+<%= render 'chats/form', chat: Chat.new , chat_room_id: @id%>
 
 <%= link_to 'Edit', edit_chat_room_path(@chat_room) %> |
 <%= link_to 'Back', chat_rooms_path %>

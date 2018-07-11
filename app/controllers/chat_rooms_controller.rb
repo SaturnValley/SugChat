@@ -25,6 +25,7 @@ class ChatRoomsController < ApplicationController
   # GET /chat_rooms/1.json
   def show
     @picture_number = 1
+    @id = params[:id]
   end
 
   # GET /chat_rooms/new

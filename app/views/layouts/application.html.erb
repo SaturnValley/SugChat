@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SugChat</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,23 +10,26 @@
 
   <body>
     <%= render 'layouts/header' %>
-    <div class="container">
+    <div class="container-left">
+      <table align="left" border width="200">
+        <%= render 'layouts/chat_rooms' %>
+      </table>
+    </div>
+    <div class="container-right">
+      <table align="right" border height="500" width="300">
+        <tr>
+          <td height="500">
+            <% if @chat_room %>
+              <%= render "layouts/drawings" %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="container-center">
+      <%= yield %>
       <%= render 'layouts/footer' %>
     </div>
-    <table align="left" border width="200">
-            <%= render 'layouts/chat_rooms' %>
-    </table>
-    <table align="right" border height="500" width="300">
-      <tr>
-        <td height="500">
-          <% if @chat_room %>
-            <%= render "layouts/drawings" %>
-          <% end %>
-        </td>
-      </tr>
-    </table>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    </div>
   </body>
 </html>

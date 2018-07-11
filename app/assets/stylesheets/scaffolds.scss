@@ -1,6 +1,35 @@
+.bg-red{
+  background: red;
+}
+
+.container-left{
+  padding-left: 20px;
+  float: left;
+  width: 20%;
+}
+
+.container-center{
+  text-align: center;
+  width: 55%;
+  float: center;
+  margin: 0 auto;
+}
+
+.container-right{
+  padding-right: 20px;
+  float: right;
+  width: 20%;
+}
+
+.navbar-text {
+  font-size: 18px;
+  padding-right: 30px;
+}
+
 body {
   background-color: #fff;
   color: #333;
+  padding-top: 100px;
   margin: 33px;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;

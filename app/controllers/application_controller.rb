@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     chat_rooms_path(resource)
   end
   def after_sign_out_path_for(resource)
-    chat_rooms_path(resource)
+    chat_rooms_path
   end
   
 end
