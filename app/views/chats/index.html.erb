@@ -58,16 +58,18 @@
                 <% chat_room = @chat_rooms.find(chat.chat_room_id) %>
                 <% user = @users.find(chat.user_id) %>
                 <td class="time-font"> <%= simple_time(chat.created_at) %> </td>
-                <% if chat.user_id == current_user.id %>
-                  <td class="my-font">
-                    <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:lime;" %>
-                    <%= "<" + user.name + "> " %>
-                    <%= link_to chat.message, chat_path(chat.id), :style=>"color:lime;" %>
+                <% if user_signed_in? %>
+                  <% if chat.user_id == current_user.id %>
+                    <td class="my-font">
+                      <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:lime;" %>
+                      <%= "<" + user.name + "> " %>
+                      <%= link_to chat.message, chat_path(chat.id), :style=>"color:lime;" %>
+                  <% end %>
                 <% else %>
-                  <td class="others-font">
-                    <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:aqua;" %>
-                    <%= "<" + user.name + "> " %>
-                    <%= link_to chat.message, chat_path(chat.id), :style=>"color:aqua;" %>
+                    <td class="others-font">
+                      <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:aqua;" %>
+                      <%= "<" + user.name + "> " %>
+                      <%= link_to chat.message, chat_path(chat.id), :style=>"color:aqua;" %>
                 <% end %>
                   </td>
              <% end %>
