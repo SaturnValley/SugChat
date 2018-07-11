@@ -64,12 +64,17 @@
                       <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:lime;" %>
                       <%= "<" + user.name + "> " %>
                       <%= link_to chat.message, chat_path(chat.id), :style=>"color:lime;" %>
-                  <% end %>
-                <% else %>
+                  <% else %>
                     <td class="others-font">
                       <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:aqua;" %>
                       <%= "<" + user.name + "> " %>
                       <%= link_to chat.message, chat_path(chat.id), :style=>"color:aqua;" %>
+                  <% end %>
+                <% else %>
+                  <td class="others-font">
+                    <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:aqua;" %>
+                    <%= "<" + user.name + "> " %>
+                    <%= link_to chat.message, chat_path(chat.id), :style=>"color:aqua;" %>
                 <% end %>
                   </td>
              <% end %>
