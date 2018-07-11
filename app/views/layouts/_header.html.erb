@@ -40,7 +40,6 @@
         </li>
         -->
       </ul>
-<<<<<<< HEAD
         <a class="btn btn-info" href="/chat_rooms/new" role="button">New Chat Room</a>
         <a class="btn btn-info" href="/chats" role="button">Chats Log</a>
         <a class="btn btn-info" href="/chat_rooms" role="button">ChatRoom List</a>
@@ -48,10 +47,8 @@
       </div>
       <ul class="nav navbar-nav navbar-right">
         <div class="nav navbar-text">
-=======
       <ul class="navbar-nav my-2 my-md-0">
         <div class=navbar-text>
->>>>>>> ce17da48ae4473eadd189462a791d92b225e8b9f
           <% if user_signed_in? %>
             You are signing in as <%= current_user.name %>
           <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, form: {style: "display:inline"}, data: {confirm: 'Are you sure?'} %>
