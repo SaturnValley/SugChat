@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <div class="bg-image">
+    <div class="bg-mask">
+      <head>
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
+
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+      </head>
+      <body>
+        <%= render 'layouts/header' %>
+        <div class="container-left">
+          <div class="table-responsive">
+            <table align="left" border>
+              <%= render 'layouts/chat_rooms' %>
+            </table>
+          </div>
+        </div>
+        <div class="container-right">
+          <div class="table-responsive">
+            <table align="center" width="250" border height="350">
+              <tr>
+                <td height="350">
+                  <%= image_tag('no_image.png',:size => "250x250", :align => "center")%>
+                  <% if user_signed_in? %>
+                    <p class="user-info-text">
+                      <%= current_user.name %>
+                      <p class="user-info-text text-muted">
+                        <%= current_user.introduction %>
+                      </p>
+                    </p>
+                    <a class="btn btn-success btn-block" href="users/ <%= current_user.id %> /edit">Edit bio</a>
+                  <% else %>
+                  <p class="user-info-text"> Guest </p>
+                  <a class="btn btn-success btn-block" href="/users/sign_in">Sign in</a>
+                  <a class="btn btn-primary btn-block" href="/users/sign_up">Sign up</a>
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="container-center">
+          <div class="container">
+            <%= yield %>
+            <%= render 'layouts/footer' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

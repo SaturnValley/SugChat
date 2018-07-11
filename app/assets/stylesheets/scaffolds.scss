@@ -1,39 +1,102 @@
-.bg-red{
-  background: red;
-}
-
 .container-left{
-  padding-left: 20px;
+  padding-top: 150px;
+  margin-left: 20px;
+  width: 22%;
   float: left;
-  width: 20%;
 }
 
 .container-center{
+  padding-top: 60px;
   text-align: center;
-  width: 55%;
+  max-width: 45%;
   float: center;
   margin: 0 auto;
 }
 
 .container-right{
-  padding-right: 20px;
+  padding-top: 170px;
+  margin-right: 20px;
+  width: 25%;
   float: right;
-  width: 20%;
+}
+
+.container{
+  max-width: 100%;
+}
+
+.nav-item{
+  font-size: 18px;
+}
+
+.navbar-left{
+  min-height: 60px;
+  margin-bottom: 0;
 }
 
 .navbar-text {
+  color: #fff;
   font-size: 18px;
   padding-right: 30px;
 }
 
+.bg-image{
+  width: 100%;
+  height: 100%;
+  background-image: url('bg_wing.jpg');
+  background-size: cover;
+}
+.bg-mask {
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.6);
+  background-size: cover;
+}
+
+.user-info-text{
+  font-size: 18px;
+}
+
+.date-font{
+  text-align: center;
+  font-size: 16px;
+  color: white;
+}
+
+.time-font{
+  font-size: 16px;
+}
+
+.my-font{
+  text-align: left;
+  font-size: 16px;
+  color: lime;
+}
+
+.others-font{
+  text-align: left;
+  font-size: 16px;
+  color: aqua;
+}
+
+.nav li{
+  display: table;
+  border-top: 1px solid rgba(255, 255, 255, .75);
+  border-left: 1px solid rgba(255, 255, 255, .75);
+  border-right: 1px solid rgba(0, 0, 0, .1);
+}
+
+html {
+  height: 100%;
+}
+
 body {
   background-color: #fff;
+  height: 100%;
   color: #333;
-  padding-top: 100px;
-  margin: 33px;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
+  display: inline;
 }
 
 p, ol, ul, td {

@@ -4,14 +4,25 @@ class ChatsController < ApplicationController
   # GET /chats
   # GET /chats.json
   def index
-    @chats = Chat.page(params[:page]).per(20)
+    @search = Chat.ransack(params[:q])
+    @chats = @search.result(distinct: true).page(params[:page]).per(10)
     @users = User.all
     @chat_rooms = ChatRoom.all
+    render :layout => "chats_layout"
+  end
+
+  def search
+    @q = Chat.search(search_params)
+    @chats = @q.result(distinct: true)
   end
 
   # GET /chats/1
   # GET /chats/1.json
   def show
+    @chat = Chat.find(params[:id])
+    @users = User.all
+    @chat_rooms = ChatRoom.all
+    render :layout => "chats_layout"
   end
 
   # GET /chats/new
@@ -65,8 +76,13 @@ class ChatsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
     def set_chat
       @chat = Chat.find(params[:id])
+    end
+
+    def search_params
+      params.require(:q).permit(:chat_room_id, :message)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

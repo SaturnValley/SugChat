@@ -1,8 +1,46 @@
-<header class="navbar navbar-fixed-top navbar-dark bg-red ">
-    <nav>
-      <ul class="nav navbar-nav navbar-left">
-        <%= link_to image_tag('SugChat_logo.png'), chat_rooms_path %>
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand">
+      <%= link_to image_tag('SugChat_logo.png'), chat_rooms_path %>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="ナビゲーションの切替">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <%= link_to chat_rooms_path do %>
+            <i class="fa fa-clone nav-link">Chat Room List</i>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to chats_path do %>
+            <i class="fa fa-comments nav-link">Chats Log</i>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to users_path do %>
+            <i class="fa fa-address-book nav-link">User List</i>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to new_chat_room_path do %>
+            <i class="fa fa-home nav-link">New Chat Room</i>
+          <% end %>
+        </li>
+        <!--
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ドロップダウン</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown">
+            <a class="dropdown-item" href="#">リンク1</a>
+            <a class="dropdown-item" href="#">リンク2</a>
+            <a class="dropdown-item" href="#">リンク3</a>
+          </div>
+        </li>
+        -->
       </ul>
+<<<<<<< HEAD
         <a class="btn btn-info" href="/chat_rooms/new" role="button">New Chat Room</a>
         <a class="btn btn-info" href="/chats" role="button">Chats Log</a>
         <a class="btn btn-info" href="/chat_rooms" role="button">ChatRoom List</a>
@@ -10,15 +48,19 @@
       </div>
       <ul class="nav navbar-nav navbar-right">
         <div class="nav navbar-text">
+=======
+      <ul class="navbar-nav my-2 my-md-0">
+        <div class=navbar-text>
+>>>>>>> ce17da48ae4473eadd189462a791d92b225e8b9f
           <% if user_signed_in? %>
             You are signing in as <%= current_user.name %>
-            <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, form: {style: "display:inline"}, data: {confirm: 'Are you sure?'} %>
-            <% else %>
+          <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, form: {style: "display:inline"}, data: {confirm: 'Are you sure?'} %>
+          <% else %>
             Welcome Guest!
             <%= button_to 'Sign In', new_user_session_path, form: {style: "display:inline"} %>
             <%= button_to 'Sign Up', new_user_registration_path, method: :get, form: {style: "display:inline"} %>
           <% end %>
+        </div>
       </ul>
-    </nav>
-  </div>
-</header>
+    </div>
+  </nav>

@@ -3,8 +3,15 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
+# enable to use tab helper in bootstrap
+gem 'rails-bootstrap-tabs'
+# enable to use icon
+gem 'font-awesome-rails'
+# enable to add search form in chats log
+gem 'ransack'
 # enable to use bootstrap (added by hk-nyao)
-gem 'bootstrap-sass'
+gem 'bootstrap'
+gem 'jquery-rails'
 # enable to paging (added by hk-nyao)
 gem 'kaminari'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

@@ -11,25 +11,30 @@
   <body>
     <%= render 'layouts/header' %>
     <div class="container-left">
-      <table align="left" border width="200">
-        <%= render 'layouts/chat_rooms' %>
-      </table>
+        <div class="table-responsive">
+          <table align="left" border>
+            <%= render 'layouts/chat_rooms' %>
+          </table>
+        </div>
     </div>
     <div class="container-right">
-      <table align="right" border height="500" width="300">
-        <tr>
-          <td height="500">
-            <% if @chat_room %>
-              <%= render "layouts/drawings" %>
-            <% end %>
-          </td>
-        </tr>
-      </table>
+        <div class="table-responsive">
+          <table align="center" width="300" border height="500">
+            <tr>
+              <td height="500">
+                <% if @chat_room %>
+                  <%= render "layouts/drawings" %>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        </div>
     </div>
     <div class="container-center">
-      <%= yield %>
-      <%= render 'layouts/footer' %>
-    </div>
+      <div class="container">
+        <%= yield %>
+        <%= render 'layouts/footer' %>
+      </div>
     </div>
   </body>
 </html>
