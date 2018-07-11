@@ -25,5 +25,4 @@ class ApplicationController < ActionController::Base
         end
       end
     end
->>>>>>> ce17da48ae4473eadd189462a791d92b225e8b9f
 end
