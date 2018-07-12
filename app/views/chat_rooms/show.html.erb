@@ -9,19 +9,20 @@
   <%= @chat_room.comment %>
 </h2>
 <% @messages = Chat.where(chat_room_id:@chat_room.id) %>
-<% @messages.reverse_each do |message| %>
+<% @messages.each do |message| %>
   <strong><font size = "3"><%= User.find(message.user_id).name %></font></strong>
-  <br>
-  <br>
-  <font size="5">
+&nbsp;&nbsp;&nbsp;
+  <font size="4">
 	<% @sp_mes = message.message.scan(/.{1,20}/) %>
-	<% @sp_mes.each do |m| %>
+	<% @sp_mes.each_with_index do |m, index| %>
 	  <%= m %>
-	  <br>
+	  <% if index != @sp_mes.size - 1 %>
+	    <br>
+	  <% end %>
 	<% end %>
   </font>
-  <%= message.created_at %>
-  <br>
+  &nbsp;
+  <font size="1"> <%= message.created_at %> </font>
   <br>
 <% end %>
 <%= render 'chats/form', chat: Chat.new , chat_room_id: @id%>
