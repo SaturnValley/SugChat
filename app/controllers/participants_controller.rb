@@ -4,43 +4,40 @@ class ParticipantsController < ApplicationController
   # GET /participants
   # GET /participants.json
   def index
-    Participant.delete_all
     @users= User.order("id ASC")
     @chat_rooms=ChatRoom.order("id ASC")
-    @chats=Chat.all
-    @strokes=Stroke.all
     @now_time=Time.now
-    @chat_border=5*60 #5 minutes
-    @login_border=30*60 #30 minutes
+    @chat_limit=5*60 #5 minutes
+    @login_limit=30*60 #30 minutes
+    #delete needless record
+    Participant.where("created_at <= ?",@now_time-@chat_limit).delete_all
     @users.each do |user|
       @online=false
-      @chat_rooms.each do |chat_room|   
-        @create=false           
-        #latest chat and stroke in one chat_room
-        if(@chats!=nil)
-          @latest_chat=@chats.where(user_id:user.id).where(chat_room_id:chat_room.id).last
+      @chat_rooms.each do |chat_room|
+        @exist=false
+        if(Participant.where(user_id:user.id).where(chat_room_id:chat_room.id)!=[])  
+          @exist=true
+          @online=true
         end
-        if(@strokes!=nil)
-          @latest_stroke=@strokes.where(user_id:user.id).where(chat_room_id:chat_room.id).last
-        end
-        if(@latest_chat!=nil)then
+        if(@exist==false)
+          #latest chat and stroke in one chat_room
+          @latest_chat=Chat.where(user_id:user.id).where(chat_room_id:chat_room.id).where("created_at >= ?",@now_time-@chat_limit).last
+          @latest_stroke=Stroke.where(user_id:user.id).where(chat_room_id:chat_room.id).where("created_at >= ?",@now_time-@chat_limit).last
           #if user chat or stroke in 5 minutes
-          if(@now_time-@latest_chat.created_at<@chat_border && @create==false)
+          if(@latest_chat!=nil && @exist==false)
             Participant.create(user: user,chat_room: chat_room)
             @online=true
-            @create=true
+            @exist=true
           end
-        end
-        if(@latest_stroke!=nil)
-          if(@now_time-@latest_stroke.created_at<@chat_border && @create=false)then
+          if(@latest_stroke!=nil && @exist==false)
             Participant.create(user: user,chat_room: chat_room)
             @online=true
-            @create=true
+            @exist=true
           end
         end
       end
       #if user sign in around 30 minutes
-      if(@online==false && @now_time-user.current_sign_in_at<@login_border) 
+      if(@online==false && @now_time-user.current_sign_in_at<@login_limit) 
         @online=true
       end
       user.update(online: @online)
@@ -100,36 +97,7 @@ class ParticipantsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  def self.create_records
-    @users= User.order("id ASC")
-    @chat_rooms=ChatRoom.order("id ASC")
-    @chats=Chat.order("id ASC")
-    @strokes=Stroke.order("id ASC")
-    @now_time=Time.now
-    @chat_border=5*60 #5 minutes
-    @login_border=30*60 #30 minutes
-    @users.each do |user|
-      @online=false
-      @caht_rooms.each do |chat_room|
-        #latest chat and stroke in one chat_room
-        @latest_chat=@chats.where(user:user.id).where(chat_room:chat_room.id).last
-        @latest_stroke=@stroke.where(user:user.id).where(chat_room:chat_room.id).last
-        if(@latest_chat!=nil || @latest_stroke!=nil)then
-          #if user chat or stroke in 5 minutes
-          if(@now_time-@latest_chat.created_at<@chat_border || @now_time-@latest_stroke.created_at<@chat_border)then
-            Participant.create(user: user,chat_room: chat_room)
-            @online=true
-          end
-        end
-      end
-      #if user sign in around 30 minutes
-      if(@online==false && @now_time-user.current_sign_in_at<@login_border) 
-        @online=true
-      end
-      user.update(online: @online)
-    end
-  end
+
   
   private
     # Use callbacks to share common setup or constraints between actions.

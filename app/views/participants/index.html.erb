@@ -12,6 +12,10 @@
     </tr>
   </thead>
   
+  <% @strokes= Participant.order("id ASC")%>
+  <%@strokes.each do |stroke|%>
+  <%=stroke.created_at%><br>
+  <%end%>
   <% @users= User.order("id ASC")%>
   <% @participants= Participant.order(user_id:"ASC",chat_room_id:"ASC")%>
   
@@ -44,5 +48,3 @@
 </table>
 </center>
 <br>
-
-<%= link_to 'New Participant', new_participant_path %>
