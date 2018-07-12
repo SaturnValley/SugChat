@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     chat_rooms_path
   end
+
+  
   private
     def check_admin
       if "/users".include?(request.path)
