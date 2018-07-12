@@ -1,18 +1,26 @@
 <h1> Chats Log </h1>
-  <%= search_form_for @search do |f| %>
+  <%= search_form_for @search_chats do |f| %>
     <div class="form-group">
-      <%= f.label :message_cont, "Search Message" %>
-      <%= f.text_field :message_cont %>
+      <%= f.label :message_cont, "Search Chat" %>
+      <%= f.text_field :message_cont, placeholder: "please input word in chat" %>
       <%= f.submit "Search" %>
     </div>
   <% end %>
+  <%= search_form_for @search_rooms, url:chats_path, as: :p do |f| %>
+    <div class="form-group">
+      <%= f.label :name_cont, "Search Room" %>
+      <%= f.text_field :name_cont, placeholder: "please input room title" %>
+      <%= f.submit "Search" %>
+    </div>
+  <% end %>
+
     <div class="container">
       <%= paginate @chats %>
 
       <ul class="nav nav-tabs">
         <div class="btn-group btn-group-toggle">
           <li class="nav-item">
-            <%= search_form_for @search do |f| %>
+            <%= search_form_for @search_chats do |f| %>
               <%= f.hidden_field :message_cont, value: "" %>
               <%= f.submit "All", :class => "btn btn-dark" %>
               <% end %>
@@ -20,7 +28,7 @@
           <% @chat_rooms.each do |chat_room| %>
             <% ref = "#tab_" + chat_room.name %>
             <li class="nav-item">
-              <%= search_form_for @search do |f| %>
+              <%= search_form_for @search_chats do |f| %>
                 <%= f.hidden_field :chat_room_id_eq, value: chat_room.id %>
                 <%= f.submit chat_room.name, :class => "btn btn-dark" %>
               <% end %>
@@ -28,7 +36,6 @@
           <% end %>
         </div>
       </ul>
-
       <div class="table-responsive">
         <table class="table table-dark table-borderless table-hover table-sm">
           <thead>
@@ -38,46 +45,54 @@
             </tr>
           </thead>
           <tbody>
-            <% date,date2=nil %>
+            <% current_chat_date, next_chat_date = nil %>
             <% @chats.each_with_index do |chat, idx| %>
               <% if idx == 0 %>
-                <% date = simple_time2(chat.created_at) %>
+                <% current_chat_date = simple_time2(chat.created_at) %>
                 <tr>
-                  <td class="date-font" colspan="2"> <%= "<-- " + date + " -->" %>
+                  <td class="date-font" colspan="2"> <%= "<-- " + current_chat_date + " -->" %>
                 </tr>
               <% else %>
-                <% date2 = simple_time2(chat.created_at) %>
-                <% if date != date2 %>
+                <% next_chat_date = simple_time2(chat.created_at) %>
+                <% if current_chat_date != next_chat_date %>
                   <tr>
-                    <td class="date-font" colspan="2"> <%= "<-- " + date2 + " -->" %>
+                    <td class="date-font" colspan="2"> <%= "<-- " + next_chat_date + " -->" %>
                   </tr>
                 <% end %>
-                <% date = date2 %>
+                <% current_chat_date = next_chat_date %>
               <% end %>
               <tr>
-                <% chat_room = @chat_rooms.find(chat.chat_room_id) %>
-                <% user = @users.find(chat.user_id) %>
-                <td class="time-font"> <%= simple_time(chat.created_at) %> </td>
-                <% if user_signed_in? %>
-                  <% if chat.user_id == current_user.id %>
-                    <td class="my-font">
-                      <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:lime;" %>
-                      <%= "<" + user.name + "> " %>
-                      <%= link_to chat.message, chat_path(chat.id), :style=>"color:lime;" %>
+                <% @chat_rooms.each do |chat_room| %>
+                  <% if !@chats.exists?(:chat_room_id => chat_room.id) || chat.chat_room_id != chat_room.id %>
+                    <!-- Do nothing -->
                   <% else %>
-                    <td class="others-font">
-                      <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:aqua;" %>
-                      <%= "<" + user.name + "> " %>
-                      <%= link_to chat.message, chat_path(chat.id), :style=>"color:aqua;" %>
+                    <% chat_room = @chat_rooms.find(chat.chat_room_id) %>
+                    <% user = @users.find(chat.user_id) %>
+                    <td class="time-font">
+                      <%= simple_time(chat.created_at) %>
+                    </td>
+                    <% if user_signed_in? %>
+                      <% if chat.user_id == current_user.id %>
+                        <td class="my-font">
+                          <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:lime;" %>
+                          <%= "<" + user.name + "> " %>
+                          <%= link_to chat.message, chat_path(chat.id), :style=>"color:lime;" %>
+                      <% else %>
+                        <td class="others-font">
+                          <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:aqua;" %>
+                          <%= "<" + user.name + "> " %>
+                          <%= link_to chat.message, chat_path(chat.id), :style=>"color:aqua;" %>
+                      <% end %>
+                    <% else %>
+                      <td class="others-font">
+                        <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:aqua;" %>
+                        <%= "<" + user.name + "> " %>
+                        <%= link_to chat.message, chat_path(chat.id), :style=>"color:aqua;" %>
+                    <% end %>
+                      </td>
                   <% end %>
-                <% else %>
-                  <td class="others-font">
-                    <%= link_to "[" + chat_room.name + "]", chat_room_path(chat_room.id), :style=>"color:aqua;" %>
-                    <%= "<" + user.name + "> " %>
-                    <%= link_to chat.message, chat_path(chat.id), :style=>"color:aqua;" %>
                 <% end %>
-                  </td>
-             <% end %>
+              <% end %>
           </tbody>
         </table>
       </div>
