@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>User List</h1>
-
-<table>
+<center>
+<table border="1">
   <thead>
     <tr>
       <th>User</th>
@@ -11,33 +11,38 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
+  
+  <% @users= User.order("id ASC")%>
+  <% @participants= Participant.order(user_id:"ASC",chat_room_id:"ASC")%>
+  
   <tbody>
-    <% @users= User.order("id ASC")%>
     <% @users.each do |user| %>
-    	<% @bool=true%>
+    	<% @first=true%>
     	<tr>
 	    <td><%= user.name %></td>
-	    <td><% if(true)%>
-	     	online
+	    <td>
+	    <% if(user.online)%>
+	     	online</td>
 	     	<% @participants.each do |participant| %>
-	     		<%if(user.id==participant.user.id)then%>
-			     	<%if(!@bool)then%>
-				     	<tr><td></td> <td></td>
+	     		<%if(user.id==participant.user.id)%>
+			     	<%if(!@first)then%>
+				     	<tr><td></td><td></td>
 			     	<%end%>
-			     	<%@bool=false%>
-			        <td><%= participant.chat_room.name %></td>
-			        <td><%= link_to 'Destroy', participant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-			        </tr>
+			     	<%@first=false%>
+			     	<td><%= participant.chat_room.name %> </td>
+			     	</tr>
 			    <%end%>
 		    <% end %>
+		    <%if(@first)%>
+		    <td></td></tr>
+		    <%end%>
 	    <% else%>
-	      	offline</tr>
+	      	offline</td><td></td></tr>
 	    <% end%>
     <% end %>
   </tbody>
 </table>
-
+</center>
 <br>
 
 <%= link_to 'New Participant', new_participant_path %>

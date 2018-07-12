@@ -2,6 +2,7 @@ $(document).ready ->
   remote_canvas = $('#draw-area')
   remote_ctx = remote_canvas[0].getContext('2d')
   remote_ctx.lineWidth = 1
+  remote_chat_room = $('#chat_room').attr("value")
   remote_down = false
 
   remote_ctx.putPoint = (x, y)->
@@ -28,19 +29,22 @@ $(document).ready ->
       # Called when the subscription has been terminated by the server
 
     received: (data) ->
-      seq = data.room.sequence.split(",")
-      remote_ctx.lineWidth = data.room.width
-      remote_ctx.strokeStyle = data.room.color
-      remote_ctx.fillStyle = data.room.color
-      remote_ctx.beginPath()
-      remote_ctx.moveTo(pos0, pos1)
-      while seq.length > 0
+      if data.room.chat_room_id == remote_chat_room
+        remote_ctx.beginPath()
+        seq = data.room.sequence.split(",")
+        remote_ctx.lineWidth = data.room.width
+        remote_ctx.strokeStyle = data.room.color
+        remote_ctx.fillStyle = data.room.color
+        remote_ctx.beginPath()
         pos0 = seq.shift()
         pos1 = seq.shift()
-        remote_ctx.lineTo(pos0, pos1)
+        remote_ctx.moveTo(pos0, pos1)
+        while seq.length > 0
+          pos0 = seq.shift()
+          pos1 = seq.shift()
+          remote_ctx.lineTo(pos0, pos1)
         remote_ctx.stroke()
-      remote_ctx.closePath()
-
+        remote_ctx.closePath()
 
       ###
       console.log 'received'
