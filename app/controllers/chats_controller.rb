@@ -44,7 +44,7 @@ class ChatsController < ApplicationController
         format.html { redirect_to @chat, notice: 'Chat was successfully created.' }
         format.json { render :show, status: :created, location: @chat }
       else
-        format.html { render :new }
+        format.html { redirect_to "/chat_rooms" }
         format.json { render json: @chat.errors, status: :unprocessable_entity }
       end
     end

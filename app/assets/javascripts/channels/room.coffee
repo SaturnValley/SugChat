@@ -43,8 +43,8 @@ $(document).ready ->
           pos0 = seq.shift()
           pos1 = seq.shift()
           remote_ctx.lineTo(pos0, pos1)
-        #remote_ctx.closePath()
         remote_ctx.stroke()
+        remote_ctx.closePath()
 
       ###
       console.log 'received'

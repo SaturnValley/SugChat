@@ -8,7 +8,7 @@
 .container-center{
   padding-top: 60px;
   text-align: center;
-  max-width: 45%;
+  max-width: 47%;
   float: center;
   margin: 0 auto;
 }
@@ -83,6 +83,13 @@
   border-top: 1px solid rgba(255, 255, 255, .75);
   border-left: 1px solid rgba(255, 255, 255, .75);
   border-right: 1px solid rgba(0, 0, 0, .1);
+}
+
+li .btn-dark{
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 html {
