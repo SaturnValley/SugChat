@@ -28,15 +28,9 @@
   font-size: 18px;
 }
 
-.navbar-left{
-  min-height: 60px;
-  margin-bottom: 0;
-}
-
 .navbar-text {
   color: #fff;
   font-size: 18px;
-  padding-right: 30px;
 }
 
 .bg-image{
@@ -90,6 +84,14 @@ li .btn-dark{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.dropdown{
+  margin-right: 80px;
+}
+
+.dropdown-text{
+  font-size: 14px;
 }
 
 html {

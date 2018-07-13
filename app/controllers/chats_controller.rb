@@ -14,8 +14,8 @@ class ChatsController < ApplicationController
     # users_id contains only users.id who have ever posted chat even once in all @chats
     @users_id = search_users(@chats)
     if @users_id.length == 0
-      # if no one has posted a chat, User.all is nothing.
-      @users = User.all
+      # if no one has posted a chat, @users is nil.
+      @users = nil
     else
       @users = User.where(id: @users_id)
     end
