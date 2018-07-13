@@ -41,7 +41,7 @@
       <div id ="bg-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <% if user_signed_in? %>
         <span class="dropdown-text">Signed in as</span> <%= current_user.name %>
-          <%= link_to 'Sign Out', user_path(current_user.id), :class => "dropdown-item", :method => :delete, :confirm => "Are you sure?", :url => new_user_session_path %>
+          <%= link_to 'Sign Out', destroy_user_session_path, :class => "dropdown-item", :method => :delete, :confirm => "Are you sure?" %>
         <% else %>
           <p class="dropdown-text">Welcome Guest!</p>
           <%= link_to 'Sign In', :class => "dropdown-item", :url => new_user_session_path %>

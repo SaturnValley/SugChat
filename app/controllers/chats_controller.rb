@@ -12,13 +12,8 @@ class ChatsController < ApplicationController
     @chat_rooms = @search_rooms.result(distinct: true).page(params[:page]).per(5)
 
     # users_id contains only users.id who have ever posted chat even once in all @chats
-    @users_id = search_users(@chats)
-    if @users_id.length == 0
-      # if no one has posted a chat, @users is nil.
-      @users = nil
-    else
-      @users = User.where(id: @users_id)
-    end
+    @users_id = search_users_id_in_chats(@chats)
+    @users = User.where(id: @users_id)
 
     render :layout => "chats_layout"
   end
@@ -37,9 +32,10 @@ class ChatsController < ApplicationController
   # GET /chats/1.json
   def show
     @chat = Chat.find(params[:id])
-    @users = User.all
-    @chat_rooms = ChatRoom.all
-    render :layout => "chats_layout"
+    @user_id = search_users_id_in_chats(@chat)
+    @chat_room_id = search_rooms_id_in_chats(@chat)
+    @user = User.find(@user_id)
+    @chat_room = ChatRoom.find(@chat_room_id)
   end
 
   # GET /chats/new
@@ -92,16 +88,43 @@ class ChatsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-
-    def search_users(chats)
+    def search_users_id_in_chats(chats)
       users_id = []
+      if !chats.kind_of?(Array)
+        chats = Array(chats)
+      end
       chats.each do |chat|
         if !users_id.include?(chat.user_id)
           users_id.push(chat.user_id.to_i)
         end
       end
-      return users_id
+
+      if users_id.length == 0
+        return nil
+      elsif users_id.length == 1
+        return users_id[0]
+      else
+        return users_id
+      end
+    end
+
+    def search_rooms_id_in_chats(chats)
+      chat_rooms_id = []
+      if !chats.kind_of?(Array)
+        chats = Array(chats)
+      end
+      chats.each do |chat|
+        if !chat_rooms_id.include?(chat.chat_room_id)
+          chat_rooms_id.push(chat.chat_room_id.to_i)
+        end
+      end
+      if chat_rooms_id.length == 0
+        return nil
+      elsif chat_rooms_id.length == 1
+        return chat_rooms_id[0]
+      else
+        return chat_rooms_id
+      end
     end
 
     def set_chat
