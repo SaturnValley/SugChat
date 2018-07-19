@@ -13,12 +13,10 @@
           </thead>
           <tbody>
             <tr>
-              <% chat_room = @chat_rooms.find(@chat.chat_room_id) %>
-              <td class="date-font"><%= link_to chat_room.name, chat_room_path(chat_room.id), :style=>"color:white;" %></td>
+              <td class="date-font"><%= link_to @chat_room.name, chat_room_path(@chat_room.id), :style=>"color:white;" %></td>
               <td class="date-font"><%= @chat.message %></td>
               <td class="date-font">
-                <% user = @users.find(@chat.user_id) %>
-                <%= user.name %>
+                <%= @user.name %>
               </td>
               <td class="date-font"> <%= simple_time3(@chat.created_at) %> </td>
             </tr>
