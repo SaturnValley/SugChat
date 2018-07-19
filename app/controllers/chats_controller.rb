@@ -36,6 +36,7 @@ class ChatsController < ApplicationController
     @chat_room_id = search_rooms_id_in_chats(@chat)
     @user = User.find(@user_id)
     @chat_room = ChatRoom.find(@chat_room_id)
+    render :layout => "chats_layout"
   end
 
   # GET /chats/new
